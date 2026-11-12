@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Clientes | Oficina Fácil{% endblock %}
+{% block content %}
+<div class="section-heading"><div><span class="eyebrow">CADASTROS</span><h1>Clientes</h1><p>Gerencie os clientes da oficina.</p></div><a class="button" href="{{ url_for('novo_cliente') }}">＋ Novo cliente</a></div>
+<section class="panel">
+{% if clientes %}<div class="table-wrap"><table><thead><tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Veículos</th><th>Ações</th></tr></thead><tbody>
+{% for c in clientes %}<tr><td><a href="{{ url_for('detalhe_cliente', id_cliente=c.id_cliente) }}">{{ c.nome }}</a></td><td>{{ c.telefone or '—' }}</td><td>{{ c.email or '—' }}</td><td>{{ c.total_veiculos }}</td><td class="actions"><a href="{{ url_for('editar_cliente', id_cliente=c.id_cliente) }}">Editar</a><form method="post" action="{{ url_for('excluir_cliente', id_cliente=c.id_cliente) }}" onsubmit="return confirm('Excluir este cliente? A exclusão só será permitida sem veículos vinculados.')"><button class="link danger" type="submit">Excluir</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="empty">Nenhum cliente cadastrado.</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if servico else 'Novo' }} serviço | Oficina Fácil{% endblock %}
+{% block content %}
+<section class="panel narrow"><a class="back" href="{{ url_for('servicos') }}">← Voltar</a><span class="eyebrow">CATÁLOGO</span><h1>{{ 'Editar serviço' if servico else 'Novo serviço' }}</h1>
+<form method="post" class="form"><label>Nome<input name="nome" required maxlength="100" value="{{ valores.get('nome', servico.nome if servico else '') }}"></label>
+<label>Descrição<textarea name="descricao" rows="3">{{ valores.get('descricao', servico.descricao if servico else '') }}</textarea></label>
+<label>Preço (R$)<input name="preco" type="number" min="0" step="0.01" required value="{{ valores.get('preco', servico.preco if servico else '') }}"></label>
+<div class="form-actions"><button class="button" type="submit">Salvar serviço</button><a class="button secondary" href="{{ url_for('servicos') }}">Cancelar</a></div></form></section>
+{% endblock %}

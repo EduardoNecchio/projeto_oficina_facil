@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Olá | Oficina Fácil{% endblock %}
+{% block content %}<section class="panel narrow"><span class="eyebrow">ROTA COM PARÂMETRO</span><h1>Olá, {{ nome }}!</h1><p>Bem-vindo ao Oficina Fácil.</p><a class="button" href="{{ url_for('index') }}">Voltar ao início</a></section>{% endblock %}

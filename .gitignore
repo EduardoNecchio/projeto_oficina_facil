@@ -1,0 +1,17 @@
+# Ambiente virtual e arquivos temporários
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Banco local (pode ser recriado com init-db e inclusoes.sql)
+*.db
+!oficina.db
+*.sqlite
+*.sqlite3
+
+# Configurações locais
+.env
+.vscode/
+.idea/

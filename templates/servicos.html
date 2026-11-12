@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Serviços | Oficina Fácil{% endblock %}
+{% block content %}
+<div class="section-heading"><div><span class="eyebrow">CATÁLOGO</span><h1>Serviços</h1><p>Serviços oferecidos pela oficina.</p></div><a class="button" href="{{ url_for('novo_servico') }}">＋ Novo serviço</a></div>
+<section class="panel">{% if servicos %}<div class="table-wrap"><table><thead><tr><th>Serviço</th><th>Descrição</th><th>Preço</th><th>Ações</th></tr></thead><tbody>
+{% for s in servicos %}<tr><td>{{ s.nome }}</td><td>{{ s.descricao or '—' }}</td><td>R$ {{ "%.2f"|format(s.preco) }}</td><td class="actions"><a href="{{ url_for('editar_servico', id_servico=s.id_servico) }}">Editar</a><form method="post" action="{{ url_for('excluir_servico', id_servico=s.id_servico) }}" onsubmit="return confirm('Excluir este serviço?')"><button class="link danger" type="submit">Excluir</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="empty">Nenhum serviço cadastrado.</p>{% endif %}</section>
+{% endblock %}

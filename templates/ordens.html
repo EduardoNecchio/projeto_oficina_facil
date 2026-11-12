@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Ordens de serviço | Oficina Fácil{% endblock %}
+{% block content %}
+<div class="section-heading"><div><span class="eyebrow">ATENDIMENTOS</span><h1>Ordens de serviço</h1><p>Acompanhe os serviços realizados e pendentes.</p></div><a class="button" href="{{ url_for('nova_ordem') }}">＋ Nova ordem</a></div>
+<section class="panel">
+    <form method="get" class="filter-form"><label for="status">Filtrar por status</label><select id="status" name="status"><option value="">Todos os status</option>{% for st in statuses %}<option value="{{ st }}" {% if status_filtro == st %}selected{% endif %}>{{ st }}</option>{% endfor %}</select><button class="button secondary" type="submit">Filtrar</button><a href="{{ url_for('ordens') }}">Limpar</a></form>
+    {% if ordens %}<div class="table-wrap"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Veículo</th><th>Data</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody>
+    {% for os in ordens %}<tr><td><a href="{{ url_for('detalhe_ordem', id_os=os.id_os) }}">#{{ os.id_os }}</a></td><td>{{ os.cliente_nome }}</td><td>{{ os.marca }} {{ os.modelo }} ({{ os.placa }})</td><td>{{ os.data_abertura[:10] }}</td><td>R$ {{ "%.2f"|format(os.valor_total) }}</td><td><span class="status {{ os.status|lower|replace(' ', '-') }}">{{ os.status }}</span></td><td class="actions"><a href="{{ url_for('detalhe_ordem', id_os=os.id_os) }}">Detalhes</a><form method="post" action="{{ url_for('excluir_ordem', id_os=os.id_os) }}" onsubmit="return confirm('Excluir esta ordem?')"><button class="link danger" type="submit">Excluir</button></form></td></tr>{% endfor %}
+    </tbody></table></div>{% else %}<p class="empty">Nenhuma ordem de serviço encontrada.</p>{% endif %}
+</section>
+{% endblock %}

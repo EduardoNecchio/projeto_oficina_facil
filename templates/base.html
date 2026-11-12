@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema acadêmico para gerenciamento de oficina mecânica.">
+    <title>{% block title %}Oficina Fácil{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-icon">🔧</span> Oficina Fácil</a>
+    <nav aria-label="Navegação principal">
+        <a href="{{ url_for('index') }}">Início</a>
+        <a href="{{ url_for('clientes') }}">Clientes</a>
+        <a href="{{ url_for('veiculos') }}">Veículos</a>
+        <a href="{{ url_for('servicos') }}">Serviços</a>
+        <a href="{{ url_for('ordens') }}">Ordens</a>
+        <a href="{{ url_for('sobre') }}">Sobre</a>
+    </nav>
+</header>
+<main class="container">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% if mensagens %}
+        <div class="messages" role="status" aria-live="polite">
+        {% for categoria, mensagem in mensagens %}
+          <div class="alert {{ categoria }}">{{ mensagem }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+<footer>Oficina Fácil · Sistema acadêmico de gerenciamento de oficina</footer>
+</body>
+</html>

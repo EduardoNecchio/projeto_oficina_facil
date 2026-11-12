@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if veiculo else 'Novo' }} veículo | Oficina Fácil{% endblock %}
+{% block content %}
+<section class="panel narrow"><a class="back" href="{{ url_for('veiculos') }}">← Voltar</a><span class="eyebrow">CADASTROS</span><h1>{{ 'Editar veículo' if veiculo else 'Novo veículo' }}</h1>
+{% if clientes %}<form method="post" class="form">
+<label>Proprietário<select name="id_cliente" required>{% for c in clientes %}<option value="{{ c.id_cliente }}" {% if valores.get('id_cliente', veiculo.id_cliente if veiculo else '')|string == c.id_cliente|string %}selected{% endif %}>{{ c.nome }}</option>{% endfor %}</select></label>
+<label>Marca<input name="marca" required value="{{ valores.get('marca', veiculo.marca if veiculo else '') }}"></label><label>Modelo<input name="modelo" required value="{{ valores.get('modelo', veiculo.modelo if veiculo else '') }}"></label>
+<label>Placa<input name="placa" required maxlength="8" value="{{ valores.get('placa', veiculo.placa if veiculo else '') }}" placeholder="ABC1D23"><small>Informe os 7 caracteres da placa, sem espaços.</small></label>
+<label>Ano<input name="ano" type="number" min="1886" max="2100" value="{{ valores.get('ano', veiculo.ano if veiculo and veiculo.ano else '') }}"></label>
+<div class="form-actions"><button class="button" type="submit">Salvar veículo</button><a class="button secondary" href="{{ url_for('veiculos') }}">Cancelar</a></div>
+</form>{% else %}<p>Cadastre um cliente antes de cadastrar um veículo.</p><a class="button" href="{{ url_for('novo_cliente') }}">Cadastrar cliente</a>{% endif %}
+</section>
+{% endblock %}

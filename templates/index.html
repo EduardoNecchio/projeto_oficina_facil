@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Painel | Oficina Fácil{% endblock %}
+{% block content %}
+<section class="hero">
+    <div><span class="eyebrow">GESTÃO AUTOMOTIVA</span><h1>Controle sua oficina em um só lugar.</h1>
+    <p>Gerencie clientes, veículos, serviços e ordens de serviço.</p></div>
+    <a class="button" href="{{ url_for('nova_ordem') }}">＋ Nova ordem</a>
+</section>
+<div class="cards">
+    <article class="metric"><span>Clientes cadastrados</span><strong>{{ dados.clientes }}</strong></article>
+    <article class="metric"><span>Veículos cadastrados</span><strong>{{ dados.veiculos }}</strong></article>
+    <article class="metric"><span>Ordens em aberto</span><strong>{{ dados.ordens_abertas }}</strong></article>
+    <article class="metric"><span>Faturamento concluído</span><strong class="money">R$ {{ "%.2f"|format(dados.faturamento) }}</strong></article>
+</div>
+<section class="panel">
+    <div class="section-heading"><div><h2>Ordens recentes</h2><p>Acompanhe os últimos atendimentos.</p></div><a href="{{ url_for('ordens') }}">Ver todas →</a></div>
+    {% if ordens %}
+    <div class="table-wrap"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Veículo</th><th>Status</th><th>Valor</th></tr></thead><tbody>
+    {% for os in ordens %}<tr><td><a href="{{ url_for('detalhe_ordem', id_os=os.id_os) }}">#{{ os.id_os }}</a></td><td>{{ os.cliente_nome }}</td><td>{{ os.marca }} {{ os.modelo }}</td><td><span class="status {{ os.status|lower|replace(' ', '-') }}">{{ os.status }}</span></td><td>R$ {{ "%.2f"|format(os.valor_total) }}</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<p class="empty">Nenhuma ordem cadastrada ainda. Cadastre um cliente, um veículo e um serviço para começar.</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ cliente.nome }} | Oficina Fácil{% endblock %}
+{% block content %}
+<section class="panel">
+    <a class="back" href="{{ url_for('clientes') }}">← Voltar aos clientes</a>
+    <div class="section-heading"><div><span class="eyebrow">DETALHE DO CADASTRO</span><h1>{{ cliente.nome }}</h1><p>{{ cliente.email or 'E-mail não informado' }} · {{ cliente.telefone or 'Telefone não informado' }}</p></div><a class="button" href="{{ url_for('editar_cliente', id_cliente=cliente.id_cliente) }}">Editar cliente</a></div>
+    <h2>Veículos deste cliente</h2>
+    {% if veiculos %}<div class="table-wrap"><table><thead><tr><th>Veículo</th><th>Placa</th><th>Ano</th></tr></thead><tbody>{% for v in veiculos %}<tr><td>{{ v.marca }} {{ v.modelo }}</td><td>{{ v.placa }}</td><td>{{ v.ano or '—' }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}<p class="empty">Este cliente ainda não possui veículos cadastrados.</p>{% endif %}
+</section>
+{% endblock %}

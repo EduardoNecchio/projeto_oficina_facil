@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Nova ordem | Oficina Fácil{% endblock %}
+{% block content %}
+<section class="panel narrow"><a class="back" href="{{ url_for('ordens') }}">← Voltar</a><span class="eyebrow">ATENDIMENTOS</span><h1>Nova ordem de serviço</h1>
+{% if veiculos and servicos %}<form method="post" class="form"><label>Veículo<select name="id_veiculo" required>{% for v in veiculos %}<option value="{{ v.id_veiculo }}" {% if valores.get('id_veiculo', '')|string == v.id_veiculo|string %}selected{% endif %}>{{ v.marca }} {{ v.modelo }} · {{ v.placa }} · {{ v.cliente_nome }}</option>{% endfor %}</select></label>
+<fieldset><legend>Selecione os serviços</legend>{% for s in servicos %}<label class="check"><input type="checkbox" name="servicos" value="{{ s.id_servico }}" {% if s.id_servico|string in selecionados %}checked{% endif %}> {{ s.nome }} — R$ {{ "%.2f"|format(s.preco) }}</label>{% endfor %}</fieldset>
+<label>Observações<textarea name="observacoes" rows="3">{{ valores.get('observacoes', '') }}</textarea></label><button class="button" type="submit">Criar ordem</button></form>
+{% else %}<p>Para criar uma ordem, cadastre ao menos um cliente, um veículo e um serviço.</p><div class="quick-links"><a href="{{ url_for('clientes') }}">Clientes</a><a href="{{ url_for('veiculos') }}">Veículos</a><a href="{{ url_for('servicos') }}">Serviços</a></div>{% endif %}
+</section>
+{% endblock %}
